@@ -1,0 +1,92 @@
+@import "core";
+
+section.content {
+	display: flex;
+	align-items: center;
+}
+
+div.main {
+	position: relative;
+	margin: 0px auto;
+	width: 400px;
+	height: calc(100% - 160px);
+	text-align: left;
+}
+
+div.title {
+	font-size: 36px;
+
+	span {
+		color: #FFFFFF;
+		font-weight: 900;
+	}
+}
+
+table.rooms {
+	border-collapse: collapse;
+	border: none;
+	margin: 20px 0px;
+	padding: 0px;
+	width: 100%;
+	font-size: 14px;
+
+	tr {
+		background-color: #41444A;
+
+		td {
+			box-sizing: border-box;
+			padding: 7px 10px;
+
+			&:nth-of-type(1) {
+				text-align: right;
+			}
+
+			&:nth-of-type(2) span {
+				color: #FFFFFF;
+				cursor: pointer;
+			}
+		}
+
+		&:first-of-type {
+			background-color: #2E3136;
+			color: #FFFFFF;
+			font-weight: 900;
+			text-transform: uppercase;
+
+			td:nth-of-type(1) {
+				border-radius: 2px 0px 0px 0px;
+				width: 10%;
+			}
+
+			td:nth-of-type(2) {
+				width: 45%;
+			}
+
+			td:nth-of-type(3) {
+				border-radius: 0px 2px 0px 0px;
+				width: 45%;
+			}
+		}
+
+		&:last-of-type {
+
+			td:nth-of-type(1) {
+				border-radius: 0px 0px 0px 2px;
+			}
+
+			td:nth-of-type(3) {
+				border-radius: 0px 0px 2px 0px;
+			}
+		}
+	}
+}
+
+input.new_room {
+	width: 140px;
+}
+
+div.footer {
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+}

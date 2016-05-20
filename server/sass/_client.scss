@@ -1,0 +1,70 @@
+@import "core";
+
+body {
+	width: 100%;
+	height: 100%;
+	color: #AFB0B2;
+	font-family: "Roboto";
+	font-weight: 400;
+}
+
+a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+input {
+	background-color: transparent;
+	border: none;
+	padding: 0px;
+	color: #EFEFEF;
+	font-family: "Roboto";
+	font-size: inherit;
+}
+
+header {
+	-webkit-app-region: drag;
+	background-color: #2E3136;
+	border-bottom: 1px solid #3E4146;
+	position: absolute;
+	top: -61px;
+	width: 100%;
+	height: 60px;
+}
+
+header section.window_buttons {
+	display: flex;
+	align-items: center;
+	position: absolute;
+	right: 0px;
+	height: 100%;
+}
+
+header section.window_buttons > svg {
+	-webkit-app-region: no-drag;
+	fill: #AFB0B2;
+	width: auto;
+	height: 20px;
+	margin: 0px 5px;
+
+	&:last-of-type {
+		margin-right: 20px;
+	}
+
+	&:hover {
+		fill: #FFFFFF;
+		cursor: pointer;
+	}
+}
+
+section.main {
+	overflow: hidden;
+}
+
+section.content {
+	position: absolute;
+	top: 61px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+}

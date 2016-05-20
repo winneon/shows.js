@@ -1,0 +1,14 @@
+extends /core
+block head
+	link(type="text/css", rel="stylesheet", href="css/connecting.css")
+block body
+	div
+		div.loader
+			div.box
+			div.hill
+		div.subtitle Connecting...
+	script.
+		console.log(__dirname);
+		setTimeout(function(){
+			require("electron").remote.getCurrentWindow().loadURL("file://" + __dirname + "/rooms.pug");
+		}, 1000);

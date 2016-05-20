@@ -1,0 +1,130 @@
+@import "core";
+
+body {
+	background-image: url("../img/mountain.svg");
+	background-position: center center;
+	background-size: cover;
+	color: #EFEFEF;
+}
+
+section.main {
+	display: table;
+	position: relative;
+	width: 100%;
+	height: calc(100% - 75px);
+
+	& > div {
+		display: table-cell;
+		text-align: center;
+		vertical-align: middle;
+	}
+}
+
+header {
+	margin: 25px;
+
+	div.subtitle {
+		margin-top: 10px;
+		font-size: 15px;
+	}
+}
+
+a.button {
+	display: inline-block;
+	-moz-border: 2px dashed #EFEFEF;
+	border: 2px dashed #EFEFEF;
+	border-radius: 30px;
+	margin: 0px auto;
+	padding: 0px 10px;
+	min-width: 275px;
+	height: 50px;
+	color: inherit;
+	font-size: 18px;
+	line-height: 50px;
+	text-transform: uppercase;
+	text-decoration: none;
+	-webkit-transition: all .1s;
+	-moz-transition: all .1s;
+	-ms-transition: all .1s;
+	transition: all .1s;
+
+	&.disabled {
+		cursor: default;
+	}
+
+	&:not(.disabled):hover {
+		background-color: #EFEFEF;
+		color: #222222;
+	}
+
+	&:not(.disabled):active {
+		-webkit-transform: translateY(1px);
+		-moz-transform: translateY(1px);
+		-ms-transform: translateY(1px);
+		transform: translateY(1px);
+	}
+}
+
+footer {
+	background-color: #EFEFEF;
+	box-sizing: border-box;
+	position: absolute;
+	bottom: -75px;
+	padding: 25px 20px;
+	width: 100%;
+	color: #222222;
+	font-size: 18px;
+
+	a {
+		display: inline-block;
+		border-bottom: 1px solid transparent;
+		color: #757575;
+		text-decoration: none;
+		transition: all .1s;
+
+		&:hover {
+			border-color: #222222;
+		}
+	}
+}
+
+span.github > a:last-of-type {
+	border-color: transparent;
+}
+
+div.buttons {
+	display: inline-block;
+	position: absolute;
+	top: 20px;
+	right: 30px;
+	text-transform: uppercase;
+	font-size: 14px;
+	font-weight: 700;
+	color: #757575;
+
+	& > a {
+		display: inline-block;
+		background-color: #EFEFEF;
+		border-radius: 2px;
+		box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.1);
+		margin-left: 20px;
+		padding: 10px 15px;
+		color: inherit;
+		text-decoration: none;
+		-webkit-transition: all .1s;
+		-moz-transition: all .1s;
+		-ms-transition: all .1s;
+		transition: all .1s;
+
+		&:hover {
+			background-color: #DFDFDF;
+		}
+
+		&:active {
+			-webkit-transform: translateY(1px);
+			-moz-transform: translateY(1px);
+			-ms-transform: translateY(1px);
+			transform: translateY(1px);
+		}
+	}
+}

@@ -1,0 +1,33 @@
+* {
+	-webkit-user-select: none;
+}
+
+*:active,
+*:focus {
+	outline: none;
+}
+
+*:active,
+*:hover {
+	cursor: pointer;
+}
+
+html,
+body,
+ul,
+ol {
+	margin: 0px;
+	padding: 0px;
+}
+
+div.modal {
+	opacity: 0;
+	visibility: hidden;
+}
+
+div.fade {
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+}
+

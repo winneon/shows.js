@@ -1,0 +1,15 @@
+extends /client
+block css
+	link.current(type="text/css", rel="stylesheet", href="/css/rooms.css")
+block header
+	a.button(href="/connect/rooms") 
+		span.arrow &nbsp;&#10132;
+		| Room List
+block content
+	if room
+		span.title ##{room}
+		div.video
+	else
+		script.
+			window.location.assign("/");
+	script(type="text/javascript", src="/js/redirect.js")

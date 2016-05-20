@@ -1,0 +1,27 @@
+extends /client
+block css
+	link.current(type="text/css", rel="stylesheet", href="/css/rooms.css")
+block content
+	span.title Rooms
+	div.main
+		div.title #
+			span rooms
+		div.subtitle Choose a room below, or create one yourself!
+		table.header
+			tr
+				td
+				td Room Name
+				td Host
+		table.rooms
+		table.footer
+			tr.footer
+				td 
+				td
+					span.new_room new_room
+				td
+		div.footer Made with &#10084; by&nbsp;
+			a(href="https://github.com/Winneon") Winneon
+			| .
+block js
+	script(type="text/javascript", src="/js/redirect.js")
+	script.current(type="text/javascript", src="/js/rooms.js")

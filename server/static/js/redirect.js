@@ -1,0 +1,1 @@
+window.location.assign("/connect" + window.location.pathname);

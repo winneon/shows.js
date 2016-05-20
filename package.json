@@ -1,0 +1,19 @@
+{
+  "name": "shows.js",
+  "description": "Video streaming, made easy.",
+  "version": "0.0.1",
+  "author": "Jesse Bryan <winneonsword@gmail.com> (http://winneon.moe)",
+  "homepage": "http://shows.winneon.moe/",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Winneon/shows.js"
+  },
+  "dependencies": {
+    "grunt": "^1.0.1",
+    "grunt-concurrent": "^2.3.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "matchdep": "^1.0.1"
+  }
+}

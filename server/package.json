@@ -1,0 +1,23 @@
+{
+  "name": "shows.js-server",
+  "description": "Video streaming, made easy.",
+  "version": "0.0.1",
+  "author": "Jesse Bryan <winneonsword@gmail.com> (http://winneon.moe)",
+  "homepage": "http://shows.winneon.moe/",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Winneon/shows.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "cookie-parser": "^1.4.1",
+    "crypto": "0.0.3",
+    "discord.js": "^7.0.1",
+    "express": "^4.13.4",
+    "pug": "^2.0.0-alpha7",
+    "request": "^2.72.0",
+    "socket.io": "^1.4.6",
+    "socket.io-cookie": "0.0.1"
+  }
+}

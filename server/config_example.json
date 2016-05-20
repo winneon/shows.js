@@ -1,0 +1,9 @@
+{
+	"domain": "127.0.0.1",
+	"port": 80,
+	"bot_token": "BOT_TOKEN_HERE",
+	"client_id": "CLIENT_ID_HERE",
+	"client_secret": "CLIENT_SECRET_HERE",
+	"invite_id": "INVITE_ID_HERE",
+	"encryption": "ENCRYPTION_KEY_HERE"
+}

@@ -1,0 +1,15 @@
+node_modules/
+client/node_modules/
+server/node_modules/
+
+.sass-cache/
+client/.sass-cache/
+server/.sass-cache/
+
+client/dist/
+server/static/dist/
+
+client/static/css/
+server/static/css/
+
+server/config.json
