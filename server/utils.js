@@ -16,4 +16,9 @@ Utils.prototype.cookie = function(name, value, age){
 	return name + "=" + value + "; Max-Age=" + age + "; path=/"
 };
 
+// credit to http://stackoverflow.com/a/3291856
+String.prototype.capitalize = function(){
+	return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
 module.exports = new Utils();

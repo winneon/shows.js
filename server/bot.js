@@ -133,4 +133,8 @@ Bot.prototype.getUserByID = function(id){
 	return undefined;
 };
 
+Bot.prototype.stripID = function(id){
+	return id.replace(/\D/g, "");
+};
+
 module.exports = new Bot();

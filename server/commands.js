@@ -20,16 +20,20 @@ function Commands(bot){
 			args.splice(0, 1);
 
 			if (command == "help"){
-				if (config.exempt_room_names.indexOf(this.bot.getChannelByID(message.channel.id).name) == -1){
-					this.bot.getBot().sendMessage(message.channel, this.getHelp());
+				this.bot.sendMessage(message.channel, this.getHelp());
+			} else if (config.exempt_room_names.indexOf(this.bot.getChannelByID(message.channel.id).name) == -1){
+				if (Object.keys(this.commands).indexOf(command) > -1){
+					if (this.commands[command].argCount <= args.length){
+						console.log("Command: ." + command);
+						this.commands[command].runCommand(message, args);
+					} else {
+						this.bot.sendMessage(message.channel, "```Usage: " + this.commands[command].usage.replace("%cmd%", command) + "```");
+					}
 				} else {
-					this.bot.getBot().sendMessage(message.channel, "This channel is not a room! Join a room before using commands.");
+					this.bot.sendMessage(message.channel, "That command doesn't exist! Try running `.help` for a list of commands.");
 				}
-			} else if (Object.keys(this.commands).indexOf(command) > -1){
-				console.log("Command: ." + command);
-				this.commands[command].runCommand(message, args);
 			} else {
-				this.bot.getBot().sendMessage(message.channel, "That command doesn't exist! Try running `.help` for a list of commands.");
+				this.bot.sendMessage(message.channel, "This channel is not a room! Join a room before using commands.");
 			}
 		}
 	});

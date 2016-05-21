@@ -32,6 +32,17 @@ Rooms.prototype.hasRoom = function(name){
 	return this.rooms[name] ? true : false;
 };
 
+Rooms.prototype.setHost = function(name, user){
+	if (this.rooms[name]){
+		var role = global.bot.getRoleByName(name + " Host");
+
+		this.rooms[name].setHost(user);
+		return true;
+	}
+
+	return false;
+};
+
 Rooms.prototype.addUser = function(name, user){
 	var socket = user.getSocket();
 
@@ -78,6 +89,7 @@ Rooms.prototype.remUser = function(user, socket){
 			global.bot.getBot().deleteChannel(global.bot.getChannelByName(name, "text").id);
 			global.bot.getBot().deleteChannel(global.bot.getChannelByName(name, "voice").id);
 			global.bot.getBot().deleteRole(global.bot.getRoleByName(name));
+			global.bot.getBot().deleteRole(global.bot.getRoleByName(name + " Host"));
 		}
 
 		return true;
@@ -93,7 +105,7 @@ Rooms.prototype.addRoom = function(room){
 		global.bot.getBot().createRole(config.server_id, {
 			color: 0x99AAB5,
 			hoist: false,
-			name: room.getName(),
+			name: room.getName().capitalize(),
 			permissions: [ ]
 		}, (error, role) => {
 			if (error){
@@ -105,6 +117,23 @@ Rooms.prototype.addRoom = function(room){
 						console.log("An error occurred adding the host to the channel role.");
 						console.log(error);
 					}
+
+					global.bot.getBot().createRole(config.server_id, {
+						hoist: true,
+						name: room.getName().capitalize() + " Host"
+					}, (error, role) => {
+						if (error){
+							console.log("An error occurred creating a host role.");
+							console.log(error);
+						} else {
+							global.bot.getBot().addUserToRole(room.getHost().getID(), role.id, (error) => {
+								if (error){
+									console.log("An error occurred adding the host to the host role.");
+									console.log(error);
+								}
+							});
+						}
+					});
 				});
 
 				global.bot.getBot().createChannel(config.server_id, room.getName(), "text", (error, channel) => {

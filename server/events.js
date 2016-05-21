@@ -93,11 +93,23 @@ global.io.on("connection", (socket) => {
 					valid: false,
 					message: "Room names must only have letters."
 				});
+			} else if (name.length < 2){
+				socket.emit("finished", {
+					valid: false,
+					message: "Room names must have 2 or more characters."
+				});
 			} else {
 				var message = undefined;
 
 				if (global.rooms.hasRoom(name)){
-					global.rooms.addUser(name, socket.user);
+					if (Object.keys(global.rooms.getRoom(name).getUsers()).indexOf(socket.user.id) == -1){
+						global.rooms.addUser(name, socket.user);
+					} else {
+						socket.emit("finished", {
+							valid: false,
+							message: "You are already in this room."
+						});
+					}
 				} else {
 					var room = require("./room")(name);
 
