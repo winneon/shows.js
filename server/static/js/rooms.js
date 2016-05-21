@@ -11,8 +11,27 @@ var newRoomEvent = (event) => {
 		}).addClass("new_room"));
 
 		$("input.new_room").on("keydown", (event) => {
-			if (event.which == 13 && $(event.target).val() != ""){
-				dynamic_load("/connect/room/" + $(event.target).val().toLowerCase());
+			if (event.which != 16 &&
+				event.which != 17 &&
+				event.which != 18 &&
+				event.which != 91 &&
+				event.which != 8){
+				if (/^[a-z]+$/i.test(String.fromCharCode(event.which)) || event.which == 13){
+					if ($(event.target).val() != ""){
+						if (/^[a-z]+$/i.test($(event.target).val())){
+							if (event.which == 13){
+								event.preventDefault();
+								dynamic_load("/connect/room/" + $(event.target).val().toLowerCase());
+							}
+						} else {
+							event.preventDefault();
+							showMessage("Room names must only have letters.");
+						}
+					}
+				} else {
+					event.preventDefault();
+					showMessage("Room names must only have letters.");
+				}
 			}
 		});
 
@@ -24,7 +43,10 @@ $("table.rooms td > span:not(.new_room)").on("click", function(){ });
 $("span.new_room").on("click", newRoomEvent);
 
 $(document).on("click", (event) => {
-	if (!$(event.target).hasClass("new_room") && $("span.new_room").length == 0){
+	if (!$(event.target).hasClass("new_room") &&
+		!$(event.target).hasClass("div.message") &&
+		!$(event.target).parents("div.message").length &&
+		$("span.new_room").length == 0){
 		$(".new_room").replaceWith($("<span/>").addClass("new_room").text("new_room").css("opacity", "0"));
 
 		$("span.new_room").animate({

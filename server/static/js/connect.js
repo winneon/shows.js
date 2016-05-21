@@ -1,7 +1,3 @@
-function finished(){
-	dynamic_load($("span.service").text());
-}
-
 var path = window.location.pathname.replace(/\/+$/, "");
 
 if (path == "/connect"){
@@ -11,4 +7,16 @@ if (path == "/connect"){
 }
 
 socket.emit("service", $("span.service").text());
-socket.on("finished", finished);
+socket.on("finished", (data) => {
+	if (data.valid){
+		var message = "";
+
+		if ($("div.message > div").text() != ""){
+			message = "?message=" + $("div.message > div").text()
+		}
+
+		dynamic_load($("span.service").text() + message);
+	} else {
+		window.location.assign("/connect/rooms?message=" + data.message);
+	}
+});

@@ -65,12 +65,16 @@ Room.prototype.setPassword = function(pass){
 };
 
 Room.prototype.addUser = function(user){
+	var socket = user.getSocket();
+
 	if (this.getPasswordUser(user.getID())){
 		this.remPasswordUser(user);
 	}
 
-	user.getSocket().room = this.getName();
+	socket.room = this.getName();
 	this.users[user.getID()] = user;
+
+	socket.join(socket.room);
 };
 
 Room.prototype.addPasswordUser = function(user){

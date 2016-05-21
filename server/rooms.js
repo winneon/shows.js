@@ -1,5 +1,7 @@
 "use strict";
 
+var config = require("./config");
+
 function Rooms(){
 	this.rooms = { };
 }
@@ -39,7 +41,6 @@ Rooms.prototype.addUser = function(name, user){
 		}
 
 		this.rooms[name].addUser(user);
-		socket.join(name);
 
 		return true;
 	}
@@ -59,6 +60,9 @@ Rooms.prototype.remUser = function(user, socket){
 
 		if (Object.keys(this.rooms[name].getUsers()).length == 0){
 			delete this.rooms[name];
+
+			global.bot.getBot().deleteChannel(global.bot.getChannelByName(name, "text").id);
+			global.bot.getBot().deleteChannel(global.bot.getChannelByName(name, "voice").id);
 		}
 
 		return true;
@@ -70,6 +74,18 @@ Rooms.prototype.remUser = function(user, socket){
 Rooms.prototype.addRoom = function(room){
 	if (!this.rooms[room.getName()]){
 		this.rooms[room.getName()] = room;
+
+		global.bot.getBot().createChannel(config.server_id, room.getName(), "text", (error, channel) => {
+			if (error){
+				console.log("An error occurred creating the text channel.");
+			}
+		});
+
+		global.bot.getBot().createChannel(config.server_id, room.getName(), "voice", (error, channel) => {
+			if (error){
+				console.log("An error occurred creating the text channel.");
+			}
+		});
 
 		return true;
 	}

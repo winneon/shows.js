@@ -4,6 +4,8 @@
 	"bot_token": "BOT_TOKEN_HERE",
 	"client_id": "CLIENT_ID_HERE",
 	"client_secret": "CLIENT_SECRET_HERE",
+	"server_id": "SERVER_ID_HERE",
 	"invite_id": "INVITE_ID_HERE",
-	"encryption": "ENCRYPTION_KEY_HERE"
+	"encryption": "ENCRYPTION_KEY_HERE",
+	"invalid_room_names": [ "help" ]
 }

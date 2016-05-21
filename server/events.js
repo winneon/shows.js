@@ -18,7 +18,7 @@ var utils = require("./utils");
 var app = express();
 var server = http.Server(app);
 
-global.discord = require("./bot");
+global.bot = require("./bot");
 global.io = socketio(server);
 
 app.set("trust proxy", "loopback");
@@ -77,22 +77,38 @@ global.io.on("connection", (socket) => {
 		}
 
 		if (service.startsWith("/rooms")){
-			socket.emit("finished");
+			socket.emit("finished", {
+				valid: true
+			});
 		} else if (service.startsWith("/room/")){
 			var name = service.replace("/room/", "");
 
-			if (rooms.hasRoom(name)){
-				rooms.addUser(name, socket);
+			if (config.invalid_room_names.indexOf(name) > -1){
+				socket.emit("finished", {
+					valid: false,
+					message: "Invalid room name."
+				});
+			} else if (!/^[a-z]+$/i.test(name)){
+				socket.emit("finished", {
+					valid: false,
+					message: "Room names must only have letters."
+				});
 			} else {
-				var room = require("./room")(name);
+				if (rooms.hasRoom(name)){
+					rooms.addUser(name, socket);
+				} else {
+					var room = require("./room")(name);
 
-				room.addUser(socket.user);
-				room.setHost(socket.user);
+					room.addUser(socket.user);
+					room.setHost(socket.user);
 
-				rooms.addRoom(room);
+					rooms.addRoom(room);
+				}
+
+				socket.emit("finished", {
+					valid: true
+				});
 			}
-
-			socket.emit("finished");
 		} else {
 			socket.emit("redirect", "/");
 		}

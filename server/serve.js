@@ -16,6 +16,10 @@ module.exports = function(req, res, next){
 	res.locals.hostname = config.domain;
 	res.locals.port = config.port;
 
+	if (req.query && req.query.message){
+		res.locals.message = req.query.message;
+	}
+
 	var file = res.path;
 
 	if (!file){
