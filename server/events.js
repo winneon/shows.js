@@ -12,13 +12,13 @@ var config = require("./config");
 var router = require("./router");
 var serve = require("./serve");
 var encrypt = require("./encryption");
-var rooms = require("./rooms");
 var utils = require("./utils");
 
 var app = express();
 var server = http.Server(app);
 
 global.bot = require("./bot");
+global.rooms = require("./rooms");
 global.io = socketio(server);
 
 app.set("trust proxy", "loopback");
@@ -63,14 +63,14 @@ global.io.on("connection", (socket) => {
 
 	socket.on("disconnect", () => {
 		if (socket.room){
-			rooms.remUser(socket.user, socket);
+			global.rooms.remUser(socket.user, socket);
 		}
 	});
 
 	socket.on("service", (service) => {
 		if (socket.room){
-			if (rooms.hasRoom(socket.room)){
-				rooms.remUser(socket.user);
+			if (global.rooms.hasRoom(socket.room)){
+				global.rooms.remUser(socket.user);
 			}
 
 			socket.room = undefined;
@@ -83,7 +83,7 @@ global.io.on("connection", (socket) => {
 		} else if (service.startsWith("/room/")){
 			var name = service.replace("/room/", "");
 
-			if (config.invalid_room_names.indexOf(name) > -1){
+			if (config.exempt_room_names.indexOf(name) > -1){
 				socket.emit("finished", {
 					valid: false,
 					message: "Invalid room name."
@@ -96,15 +96,15 @@ global.io.on("connection", (socket) => {
 			} else {
 				var message = undefined;
 
-				if (rooms.hasRoom(name)){
-					rooms.addUser(name, socket.user);
+				if (global.rooms.hasRoom(name)){
+					global.rooms.addUser(name, socket.user);
 				} else {
 					var room = require("./room")(name);
 
 					room.addUser(socket.user);
 					room.setHost(socket.user);
 
-					rooms.addRoom(room);
+					global.rooms.addRoom(room);
 
 					if (global.bot.getUserByID(socket.user.getID()).status == "offline"){
 						message = "You're not logged into Discord! If you're not logged in, you won't be able to control this room & its video."
@@ -123,7 +123,7 @@ global.io.on("connection", (socket) => {
 
 	socket.on("get_rooms", () => {
 		var data = { };
-		var list = rooms.getRooms();
+		var list = global.rooms.getRooms();
 
 		for (var room in list){
 			var room = list[room];

@@ -7,7 +7,8 @@ var newRoomEvent = (event) => {
 		opacity: 0
 	}, 100, () => {
 		that.replaceWith($("<input/>", {
-			type: "text"
+			type: "text",
+			maxlength: 20
 		}).addClass("new_room"));
 
 		$("input.new_room").on("keydown", (event) => {

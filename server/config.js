@@ -10,7 +10,7 @@ function Config(){
 		process.exit(1);
 	}
 
-	var requiredValues = [ "port", "bot_token", "client_id", "client_secret", "server_id", "invite_id", "encryption", "domain", "invalid_room_names" ];
+	var requiredValues = [ "port", "bot_token", "client_id", "client_secret", "server_id", "invite_id", "encryption", "domain", "exempt_room_names" ];
 
 	for (var i = 0; i < requiredValues.length; i++){
 		if (!config.hasOwnProperty(requiredValues[i])){

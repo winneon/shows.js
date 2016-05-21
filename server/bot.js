@@ -1,5 +1,8 @@
 "use strict";
 
+var path = require("path"),
+    fs   = require("fs");
+
 var config = require("./config");
 
 function Bot(){
@@ -10,6 +13,18 @@ function Bot(){
 	this.bot.on("ready", () => {
 		console.log("Successfully logged in as " + this.bot.user.username + "!");
 		this.authed = true;
+
+		var commands = require("./commands")(this);
+		var dir = fs.readdirSync(path.join(__dirname, "commands"));
+
+		for (var i = 0; i < dir.length; i++){
+			var command = dir[i].split(".");
+
+			command.pop();
+			command = command.join(".");
+
+			commands.registerCommand(command);
+		}
 	});
 
 	this.bot.loginWithToken(config.bot_token, (error, token) => {
