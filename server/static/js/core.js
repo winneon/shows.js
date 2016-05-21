@@ -101,18 +101,23 @@ function showMessage(message){
 	var $message = $("div.message");
 
 	$message.find("> div").text(message);
+	$message.css("opacity", "0");
 	$message.addClass("show");
 
-	$message.find("> div").on("click", (event) => {
-		if (event.offsetY < 0){
-			messageCallback();
-		}
-	});
+	$message.animate({
+		opacity: 1
+	}, 200, () => {
+		$message.find("> div").on("click", (event) => {
+			if (event.offsetY < 0){
+				messageCallback();
+			}
+		});
 
-	$(document).on("keydown", (event) => {
-		if (event.which == 27){
-			messageCallback();
-		}
+		$(document).on("keydown", (event) => {
+			if (event.which == 27){
+				messageCallback();
+			}
+		});
 	});
 }
 

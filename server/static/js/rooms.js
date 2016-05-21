@@ -15,7 +15,8 @@ var newRoomEvent = (event) => {
 				event.which != 17 &&
 				event.which != 18 &&
 				event.which != 91 &&
-				event.which != 8){
+				event.which != 8 &&
+				event.which != 27){
 				if (/^[a-z]+$/i.test(String.fromCharCode(event.which)) || event.which == 13){
 					if ($(event.target).val() != ""){
 						if (/^[a-z]+$/i.test($(event.target).val())){
@@ -39,7 +40,6 @@ var newRoomEvent = (event) => {
 	});
 };
 
-$("table.rooms td > span:not(.new_room)").on("click", function(){ });
 $("span.new_room").on("click", newRoomEvent);
 
 $(document).on("click", (event) => {
@@ -69,11 +69,15 @@ socket.on("get_rooms", (data) => {
 			locked.text("&#128274;");
 		}
 
-		name.append($("<span/>").text(data[room].name));
+		name.append($("<span/>").addClass("room").text(data[room].name));
 		host.text(data[room].host);
 
 		tr.append(locked).append(name).append(host);
 		$rooms.append(tr);
+
+		$("span.room").on("click", function(event){
+			dynamic_load("/connect/room/" + $(event.target).text().toLowerCase());
+		});
 	}
 });
 

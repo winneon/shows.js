@@ -94,8 +94,10 @@ global.io.on("connection", (socket) => {
 					message: "Room names must only have letters."
 				});
 			} else {
+				var message = undefined;
+
 				if (rooms.hasRoom(name)){
-					rooms.addUser(name, socket);
+					rooms.addUser(name, socket.user);
 				} else {
 					var room = require("./room")(name);
 
@@ -103,10 +105,15 @@ global.io.on("connection", (socket) => {
 					room.setHost(socket.user);
 
 					rooms.addRoom(room);
+
+					if (global.bot.getUserByID(socket.user.getID()).status == "offline"){
+						message = "You're not logged into Discord! If you're not logged in, you won't be able to control this room & its video."
+					}
 				}
 
 				socket.emit("finished", {
-					valid: true
+					valid: true,
+					message: message
 				});
 			}
 		} else {
@@ -115,22 +122,20 @@ global.io.on("connection", (socket) => {
 	});
 
 	socket.on("get_rooms", () => {
-		if (socket.user){
-			var data = { };
-			var list = rooms.getRooms();
+		var data = { };
+		var list = rooms.getRooms();
 
-			for (var room in list){
-				var room = list[room];
+		for (var room in list){
+			var room = list[room];
 
-				data[room.getName()] = {
-					name: room.getName(),
-					host: room.getHost().getName(),
-					pass: room.hasPassword()
-				};
-			}
-
-			socket.emit("get_rooms", data);
+			data[room.getName()] = {
+				name: room.getName(),
+				host: room.getHost().getName(),
+				pass: room.hasPassword()
+			};
 		}
+
+		socket.emit("get_rooms", data);
 	});
 
 	socket.on("error", (error) => {

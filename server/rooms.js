@@ -42,6 +42,13 @@ Rooms.prototype.addUser = function(name, user){
 
 		this.rooms[name].addUser(user);
 
+		global.bot.getBot().addUserToRole(user.getID(), global.bot.getRoleByName(name).id, (error) => {
+			if (error){
+				console.log("An error occurred adding a user to the channel role.");
+				console.log(error);
+			}
+		});
+
 		return true;
 	}
 
@@ -58,11 +65,19 @@ Rooms.prototype.remUser = function(user, socket){
 	if (name){
 		this.rooms[name].remUser(user, socket);
 
+		global.bot.getBot().removeUserFromRole(user.getID(), global.bot.getRoleByName(name).id, (error) => {
+			if (error){
+				console.log("An error occurred adding a user to the channel role.");
+				console.log(error);
+			}
+		});
+
 		if (Object.keys(this.rooms[name].getUsers()).length == 0){
 			delete this.rooms[name];
 
 			global.bot.getBot().deleteChannel(global.bot.getChannelByName(name, "text").id);
 			global.bot.getBot().deleteChannel(global.bot.getChannelByName(name, "voice").id);
+			global.bot.getBot().deleteRole(global.bot.getRoleByName(name));
 		}
 
 		return true;
@@ -75,15 +90,72 @@ Rooms.prototype.addRoom = function(room){
 	if (!this.rooms[room.getName()]){
 		this.rooms[room.getName()] = room;
 
-		global.bot.getBot().createChannel(config.server_id, room.getName(), "text", (error, channel) => {
+		global.bot.getBot().createRole(config.server_id, {
+			color: 0x99AAB5,
+			hoist: false,
+			name: room.getName(),
+			permissions: [ ]
+		}, (error, role) => {
 			if (error){
-				console.log("An error occurred creating the text channel.");
-			}
-		});
+				console.log("An error occurred creating a room role.");
+				console.log(error);
+			} else {
+				global.bot.getBot().addUserToRole(room.getHost().getID(), role.id, (error) => {
+					if (error){
+						console.log("An error occurred adding the host to the channel role.");
+						console.log(error);
+					}
+				});
 
-		global.bot.getBot().createChannel(config.server_id, room.getName(), "voice", (error, channel) => {
-			if (error){
-				console.log("An error occurred creating the text channel.");
+				global.bot.getBot().createChannel(config.server_id, room.getName(), "text", (error, channel) => {
+					if (error){
+						console.log("An error occurred creating a text channel.");
+						console.log(error);
+					} else {
+						global.bot.getBot().overwritePermissions(channel.id, global.bot.getRoleByID(config.server_id), {
+							readMessages: false
+						}, (error) => {
+							if (error){
+								console.log("An error occured disabling @everyone role perms.");
+								console.log(error);
+							}
+						});
+
+						global.bot.getBot().overwritePermissions(channel.id, role, {
+							readMessages: true
+						}, (error) => {
+							if (error){
+								console.log("An error occured enabling channel role perms.");
+								console.log(error);
+							}
+						});
+					}
+				});
+
+				global.bot.getBot().createChannel(config.server_id, room.getName(), "voice", (error, channel) => {
+					if (error){
+						console.log("An error occurred creating a voice channel.");
+						console.log(error);
+					} else {
+						global.bot.getBot().overwritePermissions(channel.id, global.bot.getRoleByID(config.server_id), {
+							voiceConnect: false
+						}, (error) => {
+							if (error){
+								console.log("An error occured disabling @everyone role perms.");
+								console.log(error);
+							}
+						});
+
+						global.bot.getBot().overwritePermissions(channel.id, role, {
+							voiceConnect: true
+						}, (error) => {
+							if (error){
+								console.log("An error occured enabling channel role perms.");
+								console.log(error);
+							}
+						});
+					}
+				});
 			}
 		});
 

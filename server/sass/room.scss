@@ -43,6 +43,24 @@ a.button {
 	}
 }
 
+div.room {
+	display: inline-block;
+	position: absolute;
+	height: 60px;
+	color: #EFEFEF;
+	font-size: 28px;
+	font-weight: 900;
+	line-height: 60px;
+
+	&:before {
+		content: "#";
+		display: inline-block;
+		margin-right: 1px;
+		color: #AFB0B2;
+		font-weight: 400;
+	}
+}
+
 div.video {
 	background-color: #1B1D1F;
 	margin: 0px auto;

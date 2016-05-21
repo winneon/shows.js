@@ -7,5 +7,5 @@
 	"server_id": "SERVER_ID_HERE",
 	"invite_id": "INVITE_ID_HERE",
 	"encryption": "ENCRYPTION_KEY_HERE",
-	"invalid_room_names": [ "help" ]
+	"invalid_room_names": [ "help", "developer", "bot" ]
 }

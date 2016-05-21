@@ -11,7 +11,9 @@ socket.on("finished", (data) => {
 	if (data.valid){
 		var message = "";
 
-		if ($("div.message > div").text() != ""){
+		if (data.message){
+			message = "?message=" + data.message
+		} else if ($("div.message > div").text() != ""){
 			message = "?message=" + $("div.message > div").text()
 		}
 
