@@ -21,22 +21,38 @@ function Commands(bot){
 
 			if (command == "help"){
 				this.bot.sendMessage(message.channel, this.getHelp());
-			} else if (config.exempt_room_names.indexOf(this.bot.getChannelByID(message.channel.id).name) == -1){
+			} else {
 				if (Object.keys(this.commands).indexOf(command) > -1){
-					if (this.commands[command].argCount <= args.length){
-						console.log("Command: ." + command);
-						this.commands[command].runCommand(message, args);
+					if (this.commands[command].global){
+						this._checkCommand(command, message, args);
 					} else {
-						this.bot.sendMessage(message.channel, "```Usage: " + this.commands[command].usage.replace("%cmd%", command) + "```");
+						if (config.exempt_room_names.indexOf(message.channel.name) == -1){
+							this._checkCommand(command, message, args);
+						} else {
+							this.bot.sendMessage(message.channel, "This channel is not a room! Join a room before using commands.");
+						}
 					}
 				} else {
 					this.bot.sendMessage(message.channel, "That command doesn't exist! Try running `.help` for a list of commands.");
 				}
-			} else {
-				this.bot.sendMessage(message.channel, "This channel is not a room! Join a room before using commands.");
 			}
 		}
 	});
+}
+
+Commands.prototype._checkCommand = function(command, message, args){
+	var room = global.rooms.getRoom(message.channel.name);
+
+	if (this.commands[command].hostOnly && room.getHost().getID() == message.author.id){
+		if (this.commands[command].argCount <= args.length){
+			console.log("Command: ." + command);
+			this.commands[command].runCommand(room, message, args);
+		} else {
+			this.bot.sendMessage(message.channel, "```Usage: ." + this.commands[command].usage.replace("%cmd%", command) + "```");
+		}
+	} else {
+		this.bot.sendMessage(message.channel, "You're not this room's host!");
+	}
 }
 
 Commands.prototype.getHelp = function(){

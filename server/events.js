@@ -59,8 +59,6 @@ global.io.on("connection", (socket) => {
 		return;
 	}
 
-	console.log("Authed: " + socket.user.getName());
-
 	socket.on("disconnect", () => {
 		if (socket.room){
 			global.rooms.remUser(socket.user, socket);

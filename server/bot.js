@@ -7,7 +7,7 @@ var config = require("./config");
 
 function Bot(){
 	this.discord = require("discord.js");
-	this.bot = new this.discord.Client();
+	this.bot = new this.discord.Client({ rateLimitAsError: true });
 	this.authed = false;
 
 	this.bot.on("ready", () => {

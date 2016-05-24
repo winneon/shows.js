@@ -34,10 +34,45 @@ Rooms.prototype.hasRoom = function(name){
 
 Rooms.prototype.setHost = function(name, user){
 	if (this.rooms[name]){
-		var role = global.bot.getRoleByName(name + " Host");
+		var room = this.rooms[name];
 
-		this.rooms[name].setHost(user);
-		return true;
+		if (room.getUser(user.getID())){
+			var prevHost = room.getHost();
+
+			global.bot.getBot().removeUserFromRole(prevHost.getID(), global.bot.getRoleByName(name + " Host").id, (error) => {
+				if (error){
+					console.log("An error occurred removing the host from the host role.");
+					console.log(error);
+
+					if (callback){
+						callback(false);
+					}
+				} else {
+					global.bot.getBot().addUserToRole(user.getID(), global.bot.getRoleByName(name + " Host").id, (error) => {
+						if (error){
+							console.log("An error occurred adding a user to the host role.");
+							console.log(error);
+
+							if (callback){
+								callback(false);
+							}
+						} else {
+							room.setHost(user);
+
+							if (callback){
+								callback(true);
+							}
+						}
+					});
+				}
+			});
+
+			return true;
+		}
+	}
+
+	if (callback){
+		callback(false);
 	}
 
 	return false;
@@ -120,7 +155,8 @@ Rooms.prototype.addRoom = function(room){
 
 					global.bot.getBot().createRole(config.server_id, {
 						hoist: true,
-						name: room.getName().capitalize() + " Host"
+						name: room.getName().capitalize() + " Host",
+						permissions: [ ]
 					}, (error, role) => {
 						if (error){
 							console.log("An error occurred creating a host role.");
