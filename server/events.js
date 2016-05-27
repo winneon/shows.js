@@ -59,6 +59,10 @@ global.io.on("connection", (socket) => {
 		return;
 	}
 
+	if (!pathname.startsWith("/connect/") && !pathname.startsWith("/rooms")){
+		socket.emit("redirect", "/connect/rooms?message=Either shows.js restarted, or you were in the wrong place. Sorry about that.");
+	}
+
 	socket.on("disconnect", () => {
 		if (socket.room){
 			global.rooms.remUser(socket.user, socket);
@@ -117,7 +121,7 @@ global.io.on("connection", (socket) => {
 					global.rooms.addRoom(room);
 
 					if (global.bot.getUserByID(socket.user.getID()).status == "offline"){
-						message = "You're not logged into Discord! If you're not logged in, you won't be able to control this room & its video."
+						message = "You're not logged into Discord! If you're not logged in, you won't be able to use commands. This includes playing a video (host only)."
 					}
 				}
 

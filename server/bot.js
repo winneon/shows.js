@@ -25,6 +25,9 @@ function Bot(){
 
 			commands.registerCommand(command);
 		}
+
+		// simultaneously check if bot is connected to server and clear rooms
+		global.rooms.clearRooms();
 	});
 
 	this.bot.loginWithToken(config.bot_token, (error, token) => {
@@ -49,6 +52,23 @@ Bot.prototype.getBot = function(){
 	return undefined;
 };
 
+Bot.prototype.getServer = function(){
+	var servers = this.bot.servers;
+
+	for (var i = 0; i < servers.length; i++){
+		var server = servers[i];
+
+		if (server.id == config.server_id){
+			return server;
+		}
+	}
+
+	console.log("The bot is not connected to the provided server_id in the config.");
+	process.exit(1);
+
+	return undefined;
+};
+
 Bot.prototype.sendMessage = function(channel, content, options, callback){
 	this.bot.sendMessage(channel, content, options, function(error){
 		if (error){
@@ -63,7 +83,7 @@ Bot.prototype.sendMessage = function(channel, content, options, callback){
 // the below functions only exist because they're not in the discord.js api for some reason
 
 Bot.prototype.getChannelByID = function(id){
-	var channels = this.bot.servers[0].channels;
+	var channels = this.getServer().channels;
 
 	for (var i = 0; i < channels.length; i++){
 		var channel = channels[i];
@@ -77,7 +97,7 @@ Bot.prototype.getChannelByID = function(id){
 };
 
 Bot.prototype.getChannelByName = function(name, type){
-	var channels = this.bot.servers[0].channels;
+	var channels = this.getServer().channels;
 	var channelType = type || "text";
 
 	for (var i = 0; i < channels.length; i++){
@@ -92,7 +112,7 @@ Bot.prototype.getChannelByName = function(name, type){
 };
 
 Bot.prototype.getRoleByID = function(id){
-	var roles = this.bot.servers[0].roles;
+	var roles = this.getServer().roles;
 
 	for (var i = 0; i < roles.length; i++){
 		var role = roles[i];
@@ -106,7 +126,7 @@ Bot.prototype.getRoleByID = function(id){
 };
 
 Bot.prototype.getRoleByName = function(name){
-	var roles = this.bot.servers[0].roles;
+	var roles = this.getServer().roles;
 
 	for (var i = 0; i < roles.length; i++){
 		var role = roles[i];
@@ -120,7 +140,7 @@ Bot.prototype.getRoleByName = function(name){
 };
 
 Bot.prototype.getUserByID = function(id){
-	var users = this.bot.servers[0].members;
+	var users = this.getServer().members;
 
 	for (var i = 0; i < users.length; i++){
 		var user = users[i];

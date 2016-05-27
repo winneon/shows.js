@@ -230,4 +230,38 @@ Rooms.prototype.addRoom = function(room){
 	return false;
 };
 
+Rooms.prototype.clearRooms = function(){
+	this.rooms = { };
+	
+	var server = global.bot.getServer();
+	var channels = server.channels;
+	var roles = server.roles;
+
+	for (var i = 0; i < channels.length; i++){
+		var channel = channels[i];
+
+		if (config.exempt_room_names.indexOf(channel.name.toLowerCase()) == -1){
+			global.bot.getBot().deleteChannel(channel.id, (error) => {
+				if (error){
+					console.log("An error occured clearing a channel.");
+					conosle.log(error);
+				}
+			});
+		}
+	}
+
+	for (var i = 0; i < roles.length; i++){
+		var role = roles[i];
+
+		if (config.exempt_room_names.indexOf(role.name.toLowerCase()) == -1 && role.id != config.server_id){
+			global.bot.getBot().deleteRole(role, (error) => {
+				if (error){
+					console.log("An error occured clearing a role.");
+					conosle.log(error);
+				}
+			});
+		}
+	}
+};
+
 module.exports = new Rooms();

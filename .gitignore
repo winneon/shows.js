@@ -13,3 +13,4 @@ client/static/css/
 server/static/css/
 
 server/config.json
+server/static/video/
