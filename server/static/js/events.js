@@ -48,11 +48,11 @@ socket.on("electron-auth", (url, pathname) => {
 
 						var footer = document.getElementsByTagName("footer")[0];
 						footer.insertBefore(button, footer.childNodes[0]);
+						
+						document.getElementsByTagName("footer")[0].childNodes[1].remove();
 					}
 				}, 50);`);
-			}
-
-			if (url.indexOf("/electron_auth?code=") > -1){
+			} else if (url.indexOf("/electron_auth?code=") > -1){
 				mainWindow.loadURL(url.replace("electron_auth", "authenticate") + "&electron=1&next=" + pathname);
 				window.close();
 			}
