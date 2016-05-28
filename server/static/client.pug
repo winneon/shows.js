@@ -8,7 +8,8 @@ block body
 		header
 			block header
 			section.right
-				a.header_button(href="/logout?next=/connect/rooms") Logout
+				if user
+					a.header_button(href="/logout?next=/connect/rooms") Logout
 		block content
 		div.message
 			div= message
