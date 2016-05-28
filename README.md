@@ -97,7 +97,7 @@ http://<DOMAIN>/electron_auth
 
 After you've done that, you may now configure the server. Change into the `server` directory and duplicate `config_example.json`. Edit the values according to your preference. **All values are required.** Below is the example configuration with an explanation for each option.
 
-```
+```javascript
 {
 	// The hostname / domain the server will run under.
 	// This is required for Discord callbacks & the client.
