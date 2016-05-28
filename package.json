@@ -9,7 +9,7 @@
     "type": "git",
     "url": "https://github.com/Winneon/shows.js"
   },
-  "dependencies": {
+  "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-concurrent": "^2.3.0",
     "grunt-contrib-sass": "^1.0.0",
