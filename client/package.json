@@ -16,12 +16,8 @@
     "url": "https://github.com/Winneon/shows.js"
   },
   "dependencies": {
-    "debug": "^2.2.0",
     "electron-builder": "^3.23.0",
-    "electron-window": "^0.8.1",
-    "jquery": "^2.2.3",
-    "mime": "^1.3.4",
-    "pug": "^2.0.0-alpha7",
-    "socket.io-client": "^1.4.6"
+    "electron-cookies": "^1.1.0",
+    "jquery": "^2.2.4"
   }
 }

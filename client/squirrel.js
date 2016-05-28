@@ -1,7 +1,6 @@
 // credit to https://github.com/mongodb-js/electron-squirrel-startup for the original code
 
 var spawn = require("child_process").spawn,
-    debug = require("debug")("squirrel"),
     app	  = require("electron").app,
     path  = require("path");
 
@@ -17,7 +16,6 @@ var run = (args, done) => {
 var check = () => {
 	if (process.platform == "win32") {
 		var cmd = process.argv[1];
-		debug("processing squirrel command `%s`", cmd);
 		
 		var target = path.basename(process.execPath);
 

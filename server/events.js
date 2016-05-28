@@ -55,7 +55,16 @@ global.io.on("connection", (socket) => {
 			value: pathname
 		});
 
-		socket.emit("redirect", utils.authURL());
+		var emit = "";
+
+		if (socket.request.headers["user-agent"].indexOf("Electron") > -1){
+			emit = "electron-auth";
+		} else {
+			emit = "redirect";
+		}
+
+		socket.emit(emit, utils.authURL(socket.request.headers["user-agent"]), pathname);
+
 		return;
 	}
 

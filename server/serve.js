@@ -10,11 +10,13 @@ module.exports = function(req, res, next){
 	res.locals.basedir = req.app.get("views");
 	res.locals.client_id = config.client_id;
 	res.locals.user = req.cookies.user;
-	res.locals.auth_url = utils.authURL();
+	res.locals.auth_url = utils.authURL(req.get("User-Agent"));
 	res.locals.service = res.serviceLoad;
 
 	res.locals.hostname = config.domain;
 	res.locals.port = config.port;
+
+	res.locals.electron = req.get("User-Agent").indexOf("Electron") > -1;
 
 	if (req.query && req.query.message){
 		res.locals.message = req.query.message;

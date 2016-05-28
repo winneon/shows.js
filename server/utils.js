@@ -4,8 +4,16 @@ var config = require("./config");
 
 function Utils(){ }
 
-Utils.prototype.authURL = function(){
-	return "https://discordapp.com/oauth2/authorize?client_id=" + config.client_id + "&response_type=code&scope=identify%20guilds.join&redirect_uri=" + config.domain + "/authenticate";
+Utils.prototype.authURL = function(agent){
+	var url =  "https://discordapp.com/oauth2/authorize?client_id=" + config.client_id + "&response_type=code&scope=identify%20guilds.join&redirect_uri=" + config.domain;
+
+	if (agent && agent.indexOf("Electron") > -1){
+		url = url + "/electron_auth";
+	} else {
+		url = url + "/authenticate";
+	}
+
+	return url;
 };
 
 Utils.prototype.cookie = function(name, value, age){

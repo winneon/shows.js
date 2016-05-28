@@ -1,3 +1,17 @@
+var isElectron = false;
+
+if (window.navigator.userAgent.indexOf("Electron") > -1){
+	try {
+		require;
+		isElectron = true;
+	} catch (error){ }
+}
+
+if (isElectron){
+	window.$ = window.jQuery = require(process.env.NODE_MODULES + "/jquery");
+	require(process.env.NODE_MODULES + "/electron-cookies");
+}
+
 function loadTitle(){
 	if ($("title").length > 0){
 		$("title").remove();

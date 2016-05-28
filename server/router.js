@@ -5,17 +5,29 @@ var config = require("./config");
 function Router(express, app, io){
 	app.get("/api/auth_url", (req, res) => {
 		res.json({
-			url: require("./serve").authURL()
+			url: require("./utils").authURL(req.get("User-Agent"))
 		});
+	});
+
+	app.get("/electron_auth", (req, res) => {
+		res.end();
 	});
 
 	app.get("/authenticate", (req, res) => {
 		if (req.query && req.query.code){
+			var uri = "http://local.winneon.moe/";
+
+			if (req.query.electron){
+				uri = uri + "electron_auth";
+			} else {
+				uri = uri + "authenticate";
+			}
+
 			require("request").post("https://discordapp.com/api/oauth2/token", {
 				form: {
 					grant_type: "authorization_code",
 					code: req.query.code,
-					redirect_uri: "http://local.winneon.moe/authenticate",
+					redirect_uri: uri,
 					client_id: config.client_id,
 					client_secret: config.client_secret
 				}
@@ -54,7 +66,9 @@ function Router(express, app, io){
 
 						var url = "/";
 
-						if (req.cookies.next){
+						if (req.query.next){
+							url = req.query.next;
+						} else if (req.cookies.next){
 							url = req.cookies.next;
 						}
 
@@ -104,7 +118,13 @@ function Router(express, app, io){
 			maxAge: 0
 		});
 
-		res.redirect("/");
+		var url = "/";
+
+		if (req.query && req.query.next){
+			url = req.query.next;
+		}
+
+		res.redirect(url);
 	});
 }
 

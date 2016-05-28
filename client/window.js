@@ -16,14 +16,20 @@ function Window(){
 			height: 720,
 			minWidth: 1280,
 			minHeight: 720,
-			frame: false
+			frame: false,
+			show: false,
+			backgroundColor: "#36393E"
 		});
 
 		mainWindow.loadURL("http://local.winneon.moe/connect/rooms");
-		mainWindow.webContents.openDevTools();
+		//mainWindow.webContents.openDevTools();
 
-		mainWindow.on("closed", function(){
+		mainWindow.on("closed", () => {
 			mainWindow = undefined;
+		});
+
+		mainWindow.webContents.on("did-finish-load", (event) => {
+			mainWindow.show();
 		});
 
 		return mainWindow;

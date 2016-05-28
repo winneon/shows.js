@@ -11,6 +11,45 @@ body {
 a {
 	color: #FFFFFF;
 	text-decoration: none;
+
+	&.header_button {
+		-webkit-app-region: no-drag;
+		display: inline-block;
+		background-color: #3E4146;
+		border-radius: 2px;
+		font-size: 14px;
+		font-weight: 700;
+		margin: 13px 20px;
+		padding: 8px 15px;
+		color: inherit;
+		text-transform: uppercase;
+		text-decoration: none;
+		-webkit-transition: all .1s;
+		-moz-transition: all .1s;
+		-ms-transition: all .1s;
+		transition: all .1s;
+
+		span.arrow {
+			display: inline-block;
+			position: relative;
+			top: 1px;
+			-webkit-transform: rotate(180deg);
+			-moz-transform: rotate(180deg);
+			-ms-transform: rotate(180deg);
+			transform: rotate(180deg);
+		}
+
+		&:hover {
+			background-color: #474B50;
+		}
+
+		&:active {
+			-webkit-transform: translateY(1px);
+			-moz-transform: translateY(1px);
+			-ms-transform: translateY(1px);
+			transform: translateY(1px);
+		}
+	}
 }
 
 input {
@@ -24,12 +63,17 @@ input {
 
 header {
 	-webkit-app-region: drag;
+	display: block;
 	background-color: #2E3136;
 	border-bottom: 1px solid #3E4146;
 	position: absolute;
 	top: -61px;
 	width: 100%;
 	height: 60px;
+}
+
+header section.right {
+	float: right;
 }
 
 header section.window_buttons {
