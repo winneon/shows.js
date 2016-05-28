@@ -95,7 +95,49 @@ http://<DOMAIN>/authenticate
 http://<DOMAIN>/electron_auth
 ```
 
-After you've done that, you may now configure the server. Change into the `server` directory and duplicate `config_example.json`. Edit the values according to your preference. **All values are required.**
+After you've done that, you may now configure the server. Change into the `server` directory and duplicate `config_example.json`. Edit the values according to your preference. **All values are required.** Below is the example configuration with an explanation for each option.
+
+```
+{
+	// The hostname / domain the server will run under.
+	// This is required for Discord callbacks & the client.
+	"domain": "127.0.0.1",
+
+	// The port the server will run under.
+	// This is required for pretty much everything.
+	"port": 80,
+
+	// The Discord bot access token.
+	// You can find this under your Discord application details.
+	"bot_token": "BOT_TOKEN_HERE",
+
+	// The Discord client application.
+	// You can find this under your Discord application details.
+	"client_id": "CLIENT_ID_HERE",
+
+	// The Discord client secret.
+	// You can find this under your Discord application details.
+	"client_secret": "CLIENT_SECRET_HERE",
+
+	// Your Discord server ID.
+	// You can find this by right-clicking your server Discord whilst in developer mode, and clicking Copy ID.
+	"server_id": "SERVER_ID_HERE",
+
+	// An infinite Discord server invite ID.
+	// You can get this by creating a new instant invite, clicking Advanced, and setting the Expire After option to Never. Copy everything after http://discord.gg/ into this option.
+	// NO slashes of any kind in this option! Only the ID should be here.
+	"invite_id": "INVITE_ID_HERE",
+
+	// A random encryption key.
+	// This is for encrypting user_ids and tokens.
+	// You can get this by mashing your keyboard into this option. No, seriously.
+	"encryption": "ENCRYPTION_KEY_HERE",
+
+	// An array of exempt room names.
+	// Any names you don't want your users creating rooms as, put them here. These include any permanent channels and all permanent roles in your Discord server.
+	"exempt_room_names": [ "help", "developer", "bot" ]
+}
+```
 
 After you've finished, renamed your edited file to `config.json`.
 
