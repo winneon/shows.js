@@ -40,7 +40,7 @@ If you don't have homebrew installed already (you should), you can install it wi
 Afterwords, type the following lines.
 
 ```
-brew install git node
+brew install git node gcc
 sudo npm install -g grunt-cli
 ```
 
@@ -51,14 +51,14 @@ Pop open your favourite terminal and type the following lines according to your 
 #### Debian / Ubuntu
 
 ```
-sudo apt-get install git nodejs npm
+sudo apt-get install git nodejs npm gcc
 sudo npm install -g grunt-cli
 ```
 
 #### Arch
 
 ```
-sudo pacman -S git nodejs npm
+sudo pacman -S git nodejs npm base-devel
 sudo npm install -g grunt-cli
 ```
 
@@ -66,7 +66,7 @@ sudo npm install -g grunt-cli
 
 ```
 sudo yum install epel-release
-sudo yum install git nodejs npm
+sudo yum install git nodejs npm gcc
 sudo npm install -g grunt-cli
 ```
 
@@ -82,6 +82,25 @@ npm install
 grunt installdeps
 ```
 
+## Configuration
+
+Before you run the client or server, you need to configure them, and before you configure them, you need a Discord server and a Discord application. If you don't know how to create a Discord server, Google it. It's not difficult.
+
+To create a Discord application, go to https://discordapp.com/developers/applications/me and create a new application. The app name can be anything you want. Add two redirect URIs with the following URLs. Replace `<DOMAIN>` with the domain your server will be running under. This can be a public IP address. If you want https, replace `http` with `https`.
+
+```
+http://<DOMAIN>/authenticate
+http://<DOMAIN>/electron_auth
+```
+
+After you've done that, you may now configure the server. Change into the `server` directory and duplicate `config_example.json`. Edit the values according to your preference. **All values are required.**
+
+After you've finished, renamed your edited file to `config.json`.
+
+## Running
+
+To run the client or server in your development environment, type the following according to your choice.
+
 ### Client
 
 ```
@@ -95,3 +114,13 @@ node_mdoules/electron-prebuilt/dist/electron .
 cd server
 node index
 ```
+
+## Building
+
+The build configuration is location in `client/package.json`. For documentation regarding the options, see [electron-builder](https://github.com/electron-userland/electron-builder/wiki/Options). To build the client, simply run the following.
+
+```
+grunt build
+```
+
+The produced binaries can be found in `client/dist/`.
