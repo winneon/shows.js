@@ -86,7 +86,7 @@ grunt installdeps
 
 Before you run the client or server, you need to configure them, and before you configure them, you need a Discord server and a Discord application. If you don't know how to create a Discord server, Google it. It's not difficult.
 
-To create a Discord application, go to https://discordapp.com/developers/applications/me and create a new application. The app name can be anything you want. Add two redirect URIs with the following URLs. Replace `<DOMAIN>` with the domain your server will be running under. This can be a public IP address. If you want https, replace `http` with `https`.
+To create a Discord application, go to https://discordapp.com/developers/applications/me and create a new application. The app name can be anything you want. Create a bot user by clicking the obvious link that says something like "Create Bot User". Add two redirect URIs with the following URLs. Replace `<DOMAIN>` with the domain your server will be running under. This can be a public IP address. If you want https, replace `http` with `https`.
 
 ```
 http://<DOMAIN>/authenticate
