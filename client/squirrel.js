@@ -6,7 +6,6 @@ var spawn = require("child_process").spawn,
 
 var run = (args, done) => {
 	var updateExe = path.resolve(path.dirname(process.execPath), "..", "Update.exe");
-	debug("Spawning `%s` with args `%s`", updateExe, args);
 
 	spawn(updateExe, args, {
 		detached: true

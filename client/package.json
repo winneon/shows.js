@@ -18,6 +18,7 @@
   "dependencies": {
     "electron-builder": "^3.23.0",
     "electron-cookies": "^1.1.0",
+    "electron-prebuilt": "^1.2.0",
     "jquery": "^2.2.4"
   }
 }
