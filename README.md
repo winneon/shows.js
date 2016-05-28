@@ -3,7 +3,7 @@
 
 shows.js aims to be a reliable and user-friendly service for those wanting to stream videos across multiple users. The service is entirely built in node and Electron, allowing for efficient design that works well on any platform you use, whether it be the desktop or the web. [Discord](https://discordapp.com) is built directly into shows.js, and serves as the service's authentication and control mechanisms.
 
-##### [HISTORY](#history) - [PREREQUISITES](#prerequisites) - [INSTALLATION](#installation) - [CONFIGURATION](#configuration) - [RUNNING](#running) - [BUILDING](#building)
+##### [HISTORY](#history) &mdash; [PREREQUISITES](#prerequisites) &mdash; [INSTALLATION](#installation) &mdash; [CONFIGURATION](#configuration) &mdash; [RUNNING](#running) &mdash; [BUILDING](#building)
 
 ## History
 
